@@ -7,18 +7,22 @@ import request from 'superagent';
 import timeout from 'timeout-then';
 import cryptoWaterMarginABI from './abi/cryptoWaterMargin.json';
 import convertContractABI from './abi/convertContract.json';
+import ERC721FullABI from "./abi/ERC721Full.json";
+import BillboardABI from "./abi/Billboard.json";
 
 // Sometimes, web3.version.network might be undefined,
 // as a workaround, use defaultNetwork in that case.
 const network = config.network[web3.version.network] || config.defaultNetwork;
-const cryptoWaterMarginContract = web3.eth.contract(cryptoWaterMarginABI).at(network.contract);
+const cryptoWaterMarginContract = web3.eth.contract(cryptoWaterMarginABI).at(network.cryptoWaterMargin);
 
 // This contract supposed to convert CWM to Lucky
 const convertContract = web3.eth.contract(convertContractABI).at(network.convert);
 
+//const ERC721FullContract = web3.eth.contract(ERC721FullABI).at(network.ERC721Full);
+const BillboardContract = web3.eth.contract(BillboardABI).at(network.Billboard);
+
 let store = [];
 let isInit = false;
-
 
 export const init = async () => {
   await request

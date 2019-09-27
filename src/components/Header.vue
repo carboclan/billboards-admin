@@ -83,9 +83,9 @@ export default {
       return;
     }
     this.network = network;
-    if (!network.contract) {
+    /*if (!network.) {
       alert(`Unsupported ${network.name}`);
-    }
+    }*/
     const infos = [];
     const announcements = await getAnnouncements();
     announcements.forEach(({ type, content }) => {
