@@ -1,10 +1,11 @@
 <template>
   <div class="">
-    <div v-if="loading"
-         class="loader-wrapper">
-      <pulse-loader></pulse-loader>
+    <div
+      v-if="loading"
+      class="loader-wrapper">
+      <pulse-loader/>
     </div>
-    <ItemList :itemIds='itemIds' />
+    <ItemList :item-ids="itemIds" />
   </div>
 </template>
 
@@ -15,7 +16,6 @@ import { getTotal, getItemIds } from '@/api';
 import { toReadablePrice } from '@/util';
 
 export default {
-  name: 'item-list',
   components: {
     PulseLoader,
     ItemList,
@@ -23,28 +23,36 @@ export default {
 
   data() {
     return {
-      loading: true,
+      loading: false,
       itemIds: [],
       total: null,
     };
   },
 
   computed: {},
+  watch: {},
 
-  async created() {
-    this.total = await getTotal();
-    const itemIds = await getItemIds(0, this.total);
-    this.itemIds = itemIds;
-    this.loading = false;
+  created() {
+    this.getItemIdFunc();
   },
 
   methods: {
+    async getItemIdFunc() {
+      // this.loading = false;
+      console.log('go');
+      const total = await getTotal();
+      console.log('total', total);
+      const itemIds = await getItemIds(0, total);
+      this.itemIds = itemIds;
+      this.total = total;
+      console.log('itemIds', this.itemIds);
+    // this.loading = false;
+    },
     toDisplayedPrice(priceInWei) {
       const readable = toReadablePrice(priceInWei);
       return `${readable.price} ${readable.unit}`;
     },
   },
-  watch: {},
 };
 </script>
 <style scoped>
