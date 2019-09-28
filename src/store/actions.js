@@ -35,6 +35,12 @@ export default {
       commit('SET_SIGN_IN_ERROR', e.message);
     }
   },
+  async FETCH_BILLBOARD({ commit }, id) {
+    const billboard = await api.getBillboard(id);
+
+    // Get is LCY Claimed and merge the status into the item
+    commit('SET_BILLBOARD', { id, billboard });
+  },  
   async FETCH_ITEM({ commit }, id) {
     const item = await api.getItem(id);
 

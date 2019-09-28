@@ -216,6 +216,27 @@ export const setNextPrice = async (id, priceInWei) => {
   return price * 1.1;
 };
 
+export const getBillboard = async (id) => {
+  const exist = await Promise.promisify(ERC721FullContract.tokenExists)(id);
+  if (!exist) return null;
+  const card = config.cards[id] || {};
+  const item = {
+    id,
+    name: card.name,
+    nickname: card.nickname,
+  };
+  item.owner =
+    await Promise.promisify(ERC721FullContract.ownerOf(id));
+  item.price =
+    await Promise.promisify(BillboardContract.price(id));    
+
+  // [[item.owner, item.price, item.nextPrice], item.estPrice] = await Promise.all([
+  //   Promise.promisify(cryptoWaterMarginContract.allOf)(id),
+  //   getNextPrice(id)]);
+  // item.price = BigNumber.maximum(item.price, item.estPrice);
+  return item;
+};
+
 export const getItem = async (id) => {
   const exist = await Promise.promisify(cryptoWaterMarginContract.tokenExists)(id);
   if (!exist) return null;

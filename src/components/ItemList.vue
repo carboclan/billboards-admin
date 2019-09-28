@@ -43,16 +43,18 @@ import { toReadablePrice } from '@/util';
 
 export default {
   name: 'item-lists',
-  props: ['itemIds'],
+  props: ['billboards', 'itemIds'],
 
   data: () => ({}),
 
   computed: {
     items() {
+
       return this.itemIds.map((id) => {
         const item = this.$store.state.items[id];
         return item || { id };
-      });
+      });  
+
     },
   },
 

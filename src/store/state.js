@@ -11,6 +11,7 @@ export default () => ({
   locale: '',
   me: null,
   signInError: null,
+  billboards: {},
   items: {},
   ads: {},
   /* Example

@@ -24,6 +24,9 @@ export default {
   SET_SIGN_IN_ERROR(state, error) {
     state.signInError = error;
   },
+  SET_BILLBOARD(state, { id, billboard }) {
+    Vue.set(state.billboards, id, billboard);
+  },  
   SET_ITEM(state, { id, item }) {
     Vue.set(state.items, id, item);
   },
