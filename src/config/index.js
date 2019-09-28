@@ -24,8 +24,8 @@ export const network = {
     convert: '0xE3F437609E97246734aa6A550E407E14dB2f53b1',
     luckyPackage: '0xDC060a83C8A81a029676e85DEe8c0D090b52F2dD',
     DecentralizedExchangeHotPotato: '0x4a11d94715194d602f9ec570e446e33bf9e41fed',
-    ERC721Full: '0x60F1D406565ED9550cDAD4CDa42DeA9931b0244c',
-    Billboard: '0x6b098fA6B11A7017671eC1Cb206130a198c87b4F',
+    ERC721Full: '0xe3F1855F3C9F261D166c767AaCa8A0cF0396FC7e',
+    Billboard: '0xeC71260C3103914Dc70A7ca6049dCE1503AA311b', 
     rpc: 'https://ropsten.infura.io/lTETGFVyQX99UKQ98BN4',
   },
   4: {
