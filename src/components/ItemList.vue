@@ -32,13 +32,52 @@
                 <li>{{ $t('Current Price') }}: {{ toDisplayedPrice(item.price) }}</li>
               </ul>
               <p class="item-slogan">{{ $t('Slogan') }}: {{ toDisplayedAd(item.id) }}</p>
+              <router-link
+                :to="{ name: 'Item', params:{id: item.id}}"
+              >购买</router-link>
             </div>
           </div>
         </div>
       </template>
     </router-link>
+    <div
+      class="column
+      is-full-mobile
+      is-one-quarter-tablet
+      is-one-quarter-desktop
+      is-one-quarter-widescreen
+      is-one-quarter-fullhd">
+      <div class="card mine">
+        <el-button
+          type="primary"
+          @click="dialogVisible = true">mint</el-button>
+      </div>
+    </div>
 
-    <router-link
+    <el-dialog
+      :visible.sync="dialogVisible"
+      title="提示"
+      width="500px">
+      <el-form
+        ref="form"
+        :model="form"
+        label-width="70px">
+        <el-form-item label="广告标语">
+          <el-input v-model="form.adslogan"/>
+        </el-form-item>
+        <el-form-item label="图片地址">
+          <el-input v-model="form.adimg"/>
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            type="primary"
+            @click="mintFunc">确定</el-button>
+          <el-button @click="dialogVisible = false">取 消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
+    <!-- <router-link
       v-for="b in billboards"
       :to="{ name: 'Item', params:{id: b.id}}"
       :key="b.id.toString()"
@@ -66,20 +105,29 @@
           </div>
         </div>
       </template>
-    </router-link>
+    </router-link> -->
 
   </div>
 </template>
 
 <script>
 import { toReadablePrice } from '@/util';
+import { mint } from '@/api';
 
 export default {
   name: 'ItemLists',
   // props: ['billboards', 'itemIds'],
   props: ['itemIds'],
 
-  data: () => ({}),
+  data() {
+    return {
+      dialogVisible: false,
+      form: {
+        adslogan: '',
+        adimg: '',
+      },
+    };
+  },
 
   computed: {
     billboards() {
@@ -128,6 +176,47 @@ export default {
       // return `http://test.cdn.hackx.org/heros/${id}.jpg`;
       return `static/assets/heros/${id}.jpg`;
     },
+    mintFunc() {
+      if (!this.form.adslogan && !this.form.adimg) return this.$message.warning('请完善内容');
+      return this.$message('buy');
+      // mint(1)
+      //   .then(() => {
+      //     // eslint-disable-next-line no-alert
+      //     alert(this.$t('BUY_SUCCESS_MSG'));
+      //   })
+      //   .catch((e) => {
+      //     // eslint-disable-next-line no-alert
+      //     alert(this.$t('BUY_FAIL_MSG'));
+      //     console.log(e);
+      //   });
+
+      // // eslint-disable-next-line no-alert
+      // alert('onMint');
+      // if (this.$store.state.signInError) {
+      //   return this.$router.push({ name: 'Login' });
+      // }
+      /* mint()
+        .then(() => {
+          alert(this.$t('BUY_SUCCESS_MSG'));
+        })
+        .catch((e) => {
+          alert(this.$t('BUY_FAIL_MSG'));
+          console.log(e);
+        }); */
+
+      /*
+      buyItem(this.itemId, buyPrice)
+        .then(() => {
+          alert(this.$t('BUY_SUCCESS_MSG'));
+          setNextPrice(this.itemId, buyPrice);
+        })
+        .catch((e) => {
+          alert(this.$t('BUY_FAIL_MSG'));
+          console.log(e);
+        });
+        */
+      // return true;
+    },
   },
 };
 </script>
@@ -136,6 +225,14 @@ export default {
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-all;
+}
+
+.mine {
+  height: 492px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
 
