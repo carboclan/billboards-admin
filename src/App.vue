@@ -3,10 +3,7 @@
     <Header />
 
     <button
-      round
       @click="onMint()">Mint</button>
-
-
     <div class="container main-container">
       <router-view :key="key"/>
     </div>

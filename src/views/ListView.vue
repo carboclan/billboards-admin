@@ -1,10 +1,11 @@
 <template>
   <div class="">
-    <div v-if="loading"
-         class="loader-wrapper">
-      <pulse-loader></pulse-loader>
+    <div
+      v-if="loading"
+      class="loader-wrapper">
+      <pulse-loader/>
     </div>
-    <ItemList :itemIds='itemIds' />
+    <ItemList :item-ids="itemIds" />
   </div>
 </template>
 
@@ -15,7 +16,6 @@ import { getTotal, getItemIds } from '@/api';
 import { toReadablePrice } from '@/util';
 
 export default {
-  name: 'item-list',
   components: {
     PulseLoader,
     ItemList,
@@ -30,6 +30,7 @@ export default {
   },
 
   computed: {},
+  watch: {},
 
   async created() {
     this.total = await getTotal();
@@ -44,7 +45,6 @@ export default {
       return `${readable.price} ${readable.unit}`;
     },
   },
-  watch: {},
 };
 </script>
 <style scoped>
