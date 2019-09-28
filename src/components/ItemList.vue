@@ -1,9 +1,9 @@
 <template>
   <div class="columns is-multiline is-mobile">
-    <router-link
+    <div
       v-for="item in items"
       v-if="item"
-      :to="{ name: 'Item', params:{id: item.id}}"
+
       :key="item.id.toString()"
       class="column
            is-full-mobile
@@ -32,14 +32,15 @@
                 <li>{{ $t('Current Price') }}: {{ toDisplayedPrice(item.price) }}</li>
               </ul>
               <p class="item-slogan">{{ $t('Slogan') }}: {{ toDisplayedAd(item.id) }}</p>
-              <router-link
-                :to="{ name: 'Item', params:{id: item.id}}"
-              >购买</router-link>
+              <el-button
+                style="position: relative;z-index: 99;"
+                @click="showDialog(item.id)"
+              >购买</el-button>
             </div>
           </div>
         </div>
       </template>
-    </router-link>
+    </div>
     <div
       class="column
       is-full-mobile
@@ -62,6 +63,12 @@
         ref="form"
         :model="form"
         label-width="70px">
+        <el-form-item label="拥有者">
+          <el-input v-model="form.owner"/>
+        </el-form-item>
+        <el-form-item label="当前价格">
+          <el-input v-model="form.nowPrice"/>
+        </el-form-item>
         <el-form-item label="广告标语">
           <el-input v-model="form.adslogan"/>
         </el-form-item>
@@ -112,7 +119,7 @@
 
 <script>
 import { toReadablePrice } from '@/util';
-import { mint } from '@/api';
+import { mint, getAbOwner, getAbPrice } from '@/api';
 
 export default {
   name: 'ItemLists',
@@ -123,6 +130,8 @@ export default {
     return {
       dialogVisible: false,
       form: {
+        owner: '',
+        nowPrice: '',
         adslogan: '',
         adimg: '',
       },
@@ -158,7 +167,9 @@ export default {
     },
   },
 
-  created() {},
+  created() {
+
+  },
 
   methods: {
     toDisplayedPrice(priceInWei) {
@@ -176,7 +187,18 @@ export default {
       // return `http://test.cdn.hackx.org/heros/${id}.jpg`;
       return `static/assets/heros/${id}.jpg`;
     },
-    mintFunc() {
+    showDialog(id) {
+      this.dialogVisible = true;
+      this.getInfo(id);
+    },
+    async getInfo(id) {
+      const owner = await getAbOwner(id);
+      const price = await getAbPrice(id);
+
+      this.form.owner = owner;
+      this.form.nowPrice = price;
+    },
+    async mintFunc() {
       if (!this.form.adslogan && !this.form.adimg) return this.$message.warning('请完善内容');
       return this.$message('buy');
       // mint(1)

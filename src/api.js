@@ -259,7 +259,6 @@ export const getItem = async (id) => {
 };
 
 export const mint = amount => new Promise((resolve, reject) => {
-
   console.log(amount);
   BillboardContract.mint(amount,
     {
@@ -312,13 +311,17 @@ export const getERC721FullContract = async () => {
 
   // const test = ERC721FullContract.tokenOfOwnerByIndex.call(1);
   // console.log(test);
-  // return Promise.promisify(ERC721FullContract.ownerOf)(1);
-  return Promise.promisify(BillboardContract.price)(1);
+  // return Promise.promisify(ERC721FullContract.ownerOf)(4);
+  return Promise.promisify(BillboardContract.price)(4);
   // return Promise.promisify(cryptoWaterMarginContract.allOf)(1);
 
   // return Promise.promisify(ERC721FullContract.totalSupply)();
   // const price = await Promise.promisify(BillboardContract.price(1));
 };
+
+// 获取账户余额
+export const getAbOwner = id => Promise.promisify(ERC721FullContract.ownerOf)(id);
+export const getAbPrice = id => Promise.promisify(BillboardContract.price)(id);
 
 export const getTotal = () => Promise.promisify(ERC721FullContract.totalSupply)();
 
