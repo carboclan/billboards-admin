@@ -44,10 +44,12 @@
             <div class="control">
               <div class="select">
                 <select v-model="locale">
-                  <option v-for="(item) in $config.i18n"
-                          :key="item.locale"
-                          :value="item.locale">
-                    {{item.langDisplay}}</option>
+                  <option 
+                    v-for="(item) in $config.i18n"
+                    :key="item.locale"
+                    :value="item.locale">
+                      {{ item.langDisplay }}
+                  </option>
                 </select>
               </div>
             </div>
