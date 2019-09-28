@@ -4,6 +4,10 @@ dist/
 npm-debug.log
 yarn-error.log
 
+# Contracts
+contracts/Ethereum/build/
+contracts/Ethereum/truffle-config.js
+
 # Editor directories and files
 .idea
 *.suo
