@@ -35,6 +35,35 @@
         </div>
       </template>
     </router-link>
+
+    <router-link v-for="b in billboards"
+                 :to="{ name: 'Item', params:{id: b.id}}"
+                 :key=b.id.toString()
+                 class="column
+           is-full-mobile
+           is-one-quarter-tablet
+           is-one-quarter-desktop
+           is-one-quarter-widescreen
+           is-one-quarter-fullhd">
+      <template>
+        <div class="card">
+          <div class="card-content">
+            <div class="content is-small">
+              <ul>
+                <li>{{$t('Owner')}}：
+                  <router-link v-if="item.owner"
+                               :to="{ name: 'User', params:{address: b.owner}}">
+                    {{item.owner.slice(-6).toUpperCase()}}
+                  </router-link>
+                </li>
+                <li>{{$t('Current Price')}}: {{toDisplayedPrice(b.price)}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </template>
+    </router-link>
+
   </div>
 </template>
 
@@ -48,13 +77,17 @@ export default {
   data: () => ({}),
 
   computed: {
+    billboards() {
+      /*return this.billboards.map((id) => {
+        const item = this.$store.state.billboards[id];
+        return item || { id };
+      });*/
+    },
     items() {
-
       return this.itemIds.map((id) => {
         const item = this.$store.state.items[id];
         return item || { id };
-      });  
-
+      });
     },
   },
 
