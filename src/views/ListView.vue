@@ -23,7 +23,7 @@ export default {
 
   data() {
     return {
-      loading: true,
+      loading: false,
       itemIds: [],
       total: null,
     };
@@ -32,14 +32,22 @@ export default {
   computed: {},
   watch: {},
 
-  async created() {
-    this.total = await getTotal();
-    const itemIds = await getItemIds(0, this.total);
-    this.itemIds = itemIds;
-    this.loading = false;
+  created() {
+    this.getItemIdFunc();
   },
 
   methods: {
+    async getItemIdFunc() {
+      // this.loading = false;
+      console.log('go');
+      const total = await getTotal();
+      console.log('total', total);
+      const itemIds = await getItemIds(0, total);
+      this.itemIds = itemIds;
+      this.total = total;
+      console.log('itemIds', this.itemIds);
+    // this.loading = false;
+    },
     toDisplayedPrice(priceInWei) {
       const readable = toReadablePrice(priceInWei);
       return `${readable.price} ${readable.unit}`;

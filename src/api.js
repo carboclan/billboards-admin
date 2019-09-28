@@ -294,6 +294,7 @@ export const isConvert = cardId => new Promise((resolve, reject) => {
 export const getTotal = () => Promise.promisify(ERC721FullContract.totalSupply)();
 
 export const getItemIds = async (offset, limit) => {
+  console.log('getItemIds');
   let ids = await Promise.promisify(cryptoWaterMarginContract.itemsForSaleLimit)(offset, limit);
   ids = ids.map(id => id.toNumber());
   ids.sort((a, b) => a - b);
