@@ -9,8 +9,8 @@ export const network = {
     cryptoWaterMargin: '0xd0792ac0de7ef31197c5f452b21a34389ecc725f',
     convert: '0x0297fdbcb9c2023bc05ad44c9f6e69b0ae6261ce',
     luckyPackage: '0x8b481c5af4734501ea8b6a0c3502e001dd883d3d',
-    ERC721Full: '0x60F1D406565ED9550cDAD4CDa42DeA9931b0244c',
-    Billboard: '0x6b098fA6B11A7017671eC1Cb206130a198c87b4F',    
+    ERC721Full: '0xe3F1855F3C9F261D166c767AaCa8A0cF0396FC7e',
+    Billboard: '0xeC71260C3103914Dc70A7ca6049dCE1503AA311b',    
     rpc: 'https://mainnet.infura.io/lTETGFVyQX99UKQ98BN4',
   },
   2: {

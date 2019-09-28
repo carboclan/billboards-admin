@@ -133,7 +133,7 @@ contract Billboard {
     }
 
     function mint(uint256 amount) public {
-        require(msg.sender == artist, "only artist can add artwork");
+        // require(msg.sender == artist, "only artist can add artwork");
         art.mint(amount);
 
         uint256 index = art.totalSupply().add(1);
