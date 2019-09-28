@@ -2,30 +2,28 @@
   <div class="item-view">
     <div v-if="item">
       <div class="columns is-multiline is-mobile">
-        <div
-          class="column
+        <div 
+class="column
            is-full-mobile">
           <img :src="getCardImage">
         </div>
-        <div
-          class="column
+        <div 
+class="column
            is-full-mobile">
           <img :src="getCardBackSideImage">
         </div>
-        <div
-          class="column
+        <div 
+class="column
            is-full-mobile">
           <div class="content">
             <h2>{{ item.nickname }} · {{ item.name }}</h2>
             <!-- Experimental Start -->
             <div class="card">
               <div class="card-image">
-                <figure
-                  class="image is-1by1"
-                  style="margin: 0">
-                  <img
-                    :src="getOwnerAvatar"
-                    alt="Holder image">
+                <figure class="image is-1by1" 
+style="margin: 0">
+                  <img :src="getOwnerAvatar" 
+alt="Holder image">
                 </figure>
               </div>
               <div class="card-content">
@@ -57,9 +55,9 @@
               <li>{{$t('isLuckyClaim')}}：{{ isConvert ? 'Yes' : 'No'}}</li>
             </ul>
             <p class="item-slogan">{{$t('Slogan')}}: {{ad}}</p> -->
-            <article
-              v-if="notOwner"
-              class="message is-warning">
+            <article 
+v-if="notOwner"
+                     class="message is-warning">
               <div class="message-body">
                 {{ $t('EDIT_SLOGAN_TIP') }}
               </div>
@@ -68,24 +66,24 @@
 
           <template v-if="notOwner">
             <div class="buttons">
-              <button
-                class="button is-danger is-outlined"
-                @click="onBuy(1)">{{ $t('BUY_BTN') }}</button>
-              <button
-                class="button is-danger is-outlined"
-                @click="onBuy(1.1)">{{ $t('PREMIUM_BUY_BTN', { rate: '10%' }) }}</button>
-              <button
-                class="button is-danger is-outlined"
-                @click="onBuy(1.2)">{{ $t('PREMIUM_BUY_BTN', { rate: '20%' }) }}</button>
-              <button
-                class="button is-danger is-outlined"
-                @click="onBuy(1.3)">{{ $t('PREMIUM_BUY_BTN', { rate: '30%' }) }}</button>
-              <button
-                class="button is-danger is-outlined"
-                @click="onBuy(1.4)">{{ $t('PREMIUM_BUY_BTN', { rate: '40%' }) }}</button>
-              <button
-                class="button is-danger is-outlined"
-                @click="onBuy(1.5)">{{ $t('PREMIUM_BUY_BTN', { rate: '50%' }) }}</button>
+              <button 
+class="button is-danger is-outlined"
+                      @click="onBuy(1)">{{ $t('BUY_BTN') }}</button>
+              <button 
+class="button is-danger is-outlined"
+                      @click="onBuy(1.1)">{{ $t('PREMIUM_BUY_BTN', { rate: '10%' }) }}</button>
+              <button 
+class="button is-danger is-outlined"
+                      @click="onBuy(1.2)">{{ $t('PREMIUM_BUY_BTN', { rate: '20%' }) }}</button>
+              <button 
+class="button is-danger is-outlined"
+                      @click="onBuy(1.3)">{{ $t('PREMIUM_BUY_BTN', { rate: '30%' }) }}</button>
+              <button 
+class="button is-danger is-outlined"
+                      @click="onBuy(1.4)">{{ $t('PREMIUM_BUY_BTN', { rate: '40%' }) }}</button>
+              <button 
+class="button is-danger is-outlined"
+                      @click="onBuy(1.5)">{{ $t('PREMIUM_BUY_BTN', { rate: '50%' }) }}</button>
             </div>
             <article class="message is-danger">
               <div class="message-body">
@@ -101,7 +99,7 @@
                 @click="onUpdateAd">{{ $t('Edit Slogan') }}</button>
               <button
                 v-if="!isConvert"
-                class="button is-info"
+                  class="button is-info"
                 @click="exchangeToken">{{ $t('Claim Lucky Token') }}</button>
 
             </div>
@@ -109,14 +107,6 @@
           </template>
         </div>
       </div>
-      <el-row>
-        <el-col :span="12">
-          <img :src="getCardImage">
-        </el-col>
-        <el-col :span="12">
-          <img :src="getCardBackSideImage">
-        </el-col>
-      </el-row>
     </div>
     <div v-else-if="item === null">
       Token doesn't exist
@@ -134,12 +124,12 @@ export default {
 
   data: () => ({}),
 
-  // asyncComputed: {
-  //   async getOwnerAvatar() {
-  //     const uri = await Dravatar(this.ownerAddress);
-  //     return uri;
-  //   },
-  // },
+  asyncComputed: {
+    async getOwnerAvatar() {
+      const uri = await Dravatar(this.ownerAddress);
+      return uri;
+    },
+  },
 
   computed: {
     ownerTag() {
@@ -155,7 +145,6 @@ export default {
       return this.item.owner;
     },
     item() {
-      console.log(this.$store.state.items[this.itemId]);
       return this.$store.state.items[this.itemId];
     },
     ad() {
