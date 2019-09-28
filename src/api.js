@@ -259,10 +259,12 @@ export const getItem = async (id) => {
 };
 
 export const mint = amount => new Promise((resolve, reject) => {
+
+  console.log(amount);
   BillboardContract.mint(amount,
     {
       value: 0, // web3.toWei(Number(price), 'ether'),
-      gas: 80000,
+      gas: 800000,
       gasPrice: 1000000000 * 18,
     },
     (err, result) => (err ? reject(err) : resolve(result)),
