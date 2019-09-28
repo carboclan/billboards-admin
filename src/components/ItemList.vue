@@ -112,6 +112,11 @@ export default {
   created() {},
 
   watch: {
+    billboards(newBillboards) {
+      newBillboards.forEach((itemId) => {
+        this.$store.dispatch('FETCH_BILLBOARD', itemId);
+      });
+    },    
     itemIds(newItemIds) {
       newItemIds.forEach((itemId) => {
         this.$store.dispatch('FETCH_ITEM', itemId);
