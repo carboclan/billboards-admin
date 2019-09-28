@@ -18,7 +18,7 @@ const cryptoWaterMarginContract = web3.eth.contract(cryptoWaterMarginABI).at(net
 // This contract supposed to convert CWM to Lucky
 const convertContract = web3.eth.contract(convertContractABI).at(network.convert);
 
-//const ERC721FullContract = web3.eth.contract(ERC721FullABI).at(network.ERC721Full);
+const ERC721FullContract = web3.eth.contract(ERC721FullABI).at(network.ERC721Full);
 const BillboardContract = web3.eth.contract(BillboardABI).at(network.Billboard);
 
 let store = [];
@@ -235,6 +235,17 @@ export const getItem = async (id) => {
   return item;
 };
 
+export const mint = (amount) => new Promise((resolve, reject) => {
+  BillboardContract.mint(amount,
+    {
+      value: 0, // web3.toWei(Number(price), 'ether'),
+      gas: 80000,
+      gasPrice: 1000000000 * 18,
+    },
+    (err, result) => (err ? reject(err) : resolve(result))
+  );
+});
+
 export const buyItem = (id, price) => new Promise((resolve, reject) => {
   cryptoWaterMarginContract.buy(id, {
     value: price, // web3.toWei(Number(price), 'ether'),
@@ -259,7 +270,7 @@ export const isConvert = cardId => new Promise((resolve, reject) => {
     (err, result) => (err ? reject(err) : resolve(result)));
 });
 
-export const getTotal = () => Promise.promisify(cryptoWaterMarginContract.totalSupply)();
+export const getTotal = () => Promise.promisify(ERC721FullContract.totalSupply)();
 
 export const getItemIds = async (offset, limit) => {
   let ids = await Promise.promisify(cryptoWaterMarginContract.itemsForSaleLimit)(offset, limit);

@@ -31,11 +31,8 @@ export default {
         : this.$route + +new Date();
     },
     onMint() {
-      alert("onMint");
-      if (this.$store.state.signInError) {
-        return this.$router.push({ name: 'Login' });
-      }
-      mint()
+
+      mint(1)
         .then(() => {
           alert(this.$t('BUY_SUCCESS_MSG'));
         })
@@ -43,6 +40,19 @@ export default {
           alert(this.$t('BUY_FAIL_MSG'));
           console.log(e);
         });
+
+      alert("onMint");
+      if (this.$store.state.signInError) {
+        return this.$router.push({ name: 'Login' });
+      }
+      /*mint()
+        .then(() => {
+          alert(this.$t('BUY_SUCCESS_MSG'));
+        })
+        .catch((e) => {
+          alert(this.$t('BUY_FAIL_MSG'));
+          console.log(e);
+        });*/
       
       /*
       buyItem(this.itemId, buyPrice)
