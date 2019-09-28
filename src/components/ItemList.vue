@@ -1,10 +1,11 @@
 <template>
   <div class="columns is-multiline is-mobile">
-    <router-link v-for="item in items"
-                 v-if="item"
-                 :to="{ name: 'Item', params:{id: item.id}}"
-                 :key=item.id.toString()
-                 class="column
+    <router-link
+      v-for="item in items"
+      v-if="item"
+      :to="{ name: 'Item', params:{id: item.id}}"
+      :key="item.id.toString()"
+      class="column
            is-full-mobile
            is-one-quarter-tablet
            is-one-quarter-desktop
@@ -19,27 +20,29 @@
           </div>
           <div class="card-content">
             <div class="content is-small">
-              <h4>{{item.nickname}} · {{item.name}}</h4>
+              <h4>{{ item.nickname }} · {{ item.name }}</h4>
               <ul>
-                <li>{{$t('Owner')}}：
-                  <router-link v-if="item.owner"
-                               :to="{ name: 'User', params:{address: item.owner}}">
-                    {{item.owner.slice(-6).toUpperCase()}}
+                <li>{{ $t('Owner') }}：
+                  <router-link
+                    v-if="item.owner"
+                    :to="{ name: 'User', params:{address: item.owner}}">
+                    {{ item.owner.slice(-6).toUpperCase() }}
                   </router-link>
                 </li>
-                <li>{{$t('Current Price')}}: {{toDisplayedPrice(item.price)}}</li>
+                <li>{{ $t('Current Price') }}: {{ toDisplayedPrice(item.price) }}</li>
               </ul>
-              <p class="item-slogan">{{$t('Slogan')}}: {{toDisplayedAd(item.id)}}</p>
+              <p class="item-slogan">{{ $t('Slogan') }}: {{ toDisplayedAd(item.id) }}</p>
             </div>
           </div>
         </div>
       </template>
     </router-link>
 
-    <router-link v-for="b in billboards"
-                 :to="{ name: 'Item', params:{id: b.id}}"
-                 :key=b.id.toString()
-                 class="column
+    <router-link
+      v-for="b in billboards"
+      :to="{ name: 'Item', params:{id: b.id}}"
+      :key="b.id.toString()"
+      class="column
            is-full-mobile
            is-one-quarter-tablet
            is-one-quarter-desktop
@@ -50,13 +53,14 @@
           <div class="card-content">
             <div class="content is-small">
               <ul>
-                <li>{{$t('Owner')}}：
-                  <router-link v-if="item.owner"
-                               :to="{ name: 'User', params:{address: b.owner}}">
-                    {{item.owner.slice(-6).toUpperCase()}}
+                <li>{{ $t('Owner') }}：
+                  <router-link
+                    v-if="item.owner"
+                    :to="{ name: 'User', params:{address: b.owner}}">
+                    {{ item.owner.slice(-6).toUpperCase() }}
                   </router-link>
                 </li>
-                <li>{{$t('Current Price')}}: {{toDisplayedPrice(b.price)}}</li>
+                <li>{{ $t('Current Price') }}: {{ toDisplayedPrice(b.price) }}</li>
               </ul>
             </div>
           </div>
@@ -71,17 +75,18 @@
 import { toReadablePrice } from '@/util';
 
 export default {
-  name: 'item-lists',
-  props: ['billboards', 'itemIds'],
+  name: 'ItemLists',
+  // props: ['billboards', 'itemIds'],
+  props: ['itemIds'],
 
   data: () => ({}),
 
   computed: {
     billboards() {
-      /*return this.billboards.map((id) => {
+      /* return this.billboards.map((id) => {
         const item = this.$store.state.billboards[id];
         return item || { id };
-      });*/
+      }); */
     },
     items() {
       return this.itemIds.map((id) => {
@@ -90,6 +95,22 @@ export default {
       });
     },
   },
+
+  watch: {
+    billboards(newBillboards) {
+      newBillboards.forEach((itemId) => {
+        this.$store.dispatch('FETCH_BILLBOARD', itemId);
+      });
+    },
+    itemIds(newItemIds) {
+      newItemIds.forEach((itemId) => {
+        this.$store.dispatch('FETCH_ITEM', itemId);
+        this.$store.dispatch('FETCH_AD', itemId);
+      });
+    },
+  },
+
+  created() {},
 
   methods: {
     toDisplayedPrice(priceInWei) {
@@ -106,22 +127,6 @@ export default {
     getCardImage(id) {
       // return `http://test.cdn.hackx.org/heros/${id}.jpg`;
       return `static/assets/heros/${id}.jpg`;
-    },
-  },
-
-  created() {},
-
-  watch: {
-    billboards(newBillboards) {
-      newBillboards.forEach((itemId) => {
-        this.$store.dispatch('FETCH_BILLBOARD', itemId);
-      });
-    },    
-    itemIds(newItemIds) {
-      newItemIds.forEach((itemId) => {
-        this.$store.dispatch('FETCH_ITEM', itemId);
-        this.$store.dispatch('FETCH_AD', itemId);
-      });
     },
   },
 };
