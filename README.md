@@ -1,6 +1,8 @@
-# Bill Board Admin
+# Billboard Administation FrontEnd
 
-# Build Setup
+Create, manage and trade of you Billboard
+
+## Build Setup
 
 ``` bash
 
