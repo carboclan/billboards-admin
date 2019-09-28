@@ -7,8 +7,8 @@ import request from 'superagent';
 import timeout from 'timeout-then';
 import cryptoWaterMarginABI from './abi/cryptoWaterMargin.json';
 import convertContractABI from './abi/convertContract.json';
-import ERC721FullABI from "./abi/ERC721Full.json";
-import BillboardABI from "./abi/Billboard.json";
+import ERC721FullABI from './abi/ERC721Full.json';
+import BillboardABI from './abi/Billboard.json';
 
 // Sometimes, web3.version.network might be undefined,
 // as a workaround, use defaultNetwork in that case.
@@ -228,7 +228,7 @@ export const getBillboard = async (id) => {
   item.owner =
     await Promise.promisify(ERC721FullContract.ownerOf(id));
   item.price =
-    await Promise.promisify(BillboardContract.price(id));    
+    await Promise.promisify(BillboardContract.price(id));
 
   // [[item.owner, item.price, item.nextPrice], item.estPrice] = await Promise.all([
   //   Promise.promisify(cryptoWaterMarginContract.allOf)(id),
@@ -256,14 +256,14 @@ export const getItem = async (id) => {
   return item;
 };
 
-export const mint = (amount) => new Promise((resolve, reject) => {
+export const mint = amount => new Promise((resolve, reject) => {
   BillboardContract.mint(amount,
     {
       value: 0, // web3.toWei(Number(price), 'ether'),
       gas: 80000,
       gasPrice: 1000000000 * 18,
     },
-    (err, result) => (err ? reject(err) : resolve(result))
+    (err, result) => (err ? reject(err) : resolve(result)),
   );
 });
 
