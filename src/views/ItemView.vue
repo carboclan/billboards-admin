@@ -1,69 +1,15 @@
 <template>
   <div class="item-view">
     <div v-if="item">
-      <div class="columns is-multiline is-mobile">
-        <div
-          class="column
-           is-full-mobile">
-          <img :src="getCardImage">
-        </div>
-        <div
-          class="column
-           is-full-mobile">
-          <img :src="getCardBackSideImage">
-        </div>
-        <div
-          class="column
-           is-full-mobile">
-          <div class="content">
-            <h2>{{ item.nickname }} · {{ item.name }}</h2>
-            <!-- Experimental Start -->
-            <div class="card">
-              <div class="card-image">
-                <figure
-                  class="image is-1by1"
-                  style="margin: 0">
-                  <img
-                    :src="getOwnerAvatar"
-                    alt="Holder image">
-                </figure>
-              </div>
-              <div class="card-content">
-                <div class="media">
-                  <div class="media-content">
-                    <p class="title is-4">{{ $t('Owner') }} {{ ownerTag }}</p>
-                    <p class="subtitle is-6"> {{ $t('Current Price') }}：{{ toDisplayedPrice(item.price) }} </p>
-                    <p class="subtitle is-6"> {{ $t('isLuckyClaim') }}: {{ isConvert ? 'Yes' : 'No' }} </p>
-                    <p class="subtitle is-6"> {{ $t('Slogan') }}: {{ ad }} </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Experimental End -->
+      <el-row>
+        <el-col :span="24">
+          <h2>{{ item.nickname }} · {{ item.name }}</h2>
 
-            <!-- <router-link :to="{ name: 'User', params:{address: item.owner}}">
-            <figure class="image is-128x128">
-              <img class="item-image"
-              :src="getOwnerAvatar">
-            </figure>
-            </router-link>
-            <ul>
-              <li>{{$t('Owner')}}：
-                <router-link :to="{ name: 'User', params:{address: item.owner}}">
-                  {{ownerTag}}
-                </router-link>
-              </li>
-              <li>{{$t('Current Price')}}：{{toDisplayedPrice(item.price)}}</li>
-              <li>{{$t('isLuckyClaim')}}：{{ isConvert ? 'Yes' : 'No'}}</li>
-            </ul>
-            <p class="item-slogan">{{$t('Slogan')}}: {{ad}}</p> -->
-            <article
-              v-if="notOwner"
-              class="message is-warning">
-              <div class="message-body">
-                {{ $t('EDIT_SLOGAN_TIP') }}
-              </div>
-            </article>
+          <div class="media-content">
+            <p class="title is-4">{{ $t('Owner') }} {{ ownerTag }}</p>
+            <p class="subtitle is-6"> {{ $t('Current Price') }}：{{ toDisplayedPrice(item.price) }} </p>
+            <p class="subtitle is-6"> {{ $t('isLuckyClaim') }}: {{ isConvert ? 'Yes' : 'No' }} </p>
+            <p class="subtitle is-6"> {{ $t('Slogan') }}: {{ ad }} </p>
           </div>
 
           <template v-if="notOwner">
@@ -107,15 +53,21 @@
             </div>
 
           </template>
-        </div>
-      </div>
-      <el-row>
-        <el-col :span="12">
-          <img :src="getCardImage">
+
+          <article
+            v-if="notOwner"
+            class="message is-warning">
+            <div class="message-body">
+              {{ $t('EDIT_SLOGAN_TIP') }}
+            </div>
+          </article>
         </el-col>
-        <el-col :span="12">
-          <img :src="getCardBackSideImage">
+        <el-col :span="24">
+          <div class="ad-img">
+            <img :src="getCardImage">
+          </div>
         </el-col>
+
       </el-row>
     </div>
     <div v-else-if="item === null">
@@ -155,7 +107,7 @@ export default {
       return this.item.owner;
     },
     item() {
-      console.log(this.$store.state.items[this.itemId]);
+      console.log('item', this.$store.state.items[this.itemId]);
       return this.$store.state.items[this.itemId];
     },
     ad() {
@@ -239,5 +191,15 @@ export default {
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-all;
+}
+
+.ad-img {
+  height: 500px;
+  border: 1px solid #ececec;
+}
+.ad-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>

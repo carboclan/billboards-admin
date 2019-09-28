@@ -12,7 +12,7 @@
 <script>
 import PulseLoader from 'vue-spinner/src/PulseLoader';
 import ItemList from '@/components/ItemList';
-import { getTotal, getItemIds } from '@/api';
+import { getTotal, getItemIds, getERC721FullContract } from '@/api';
 import { toReadablePrice } from '@/util';
 
 export default {
@@ -34,9 +34,19 @@ export default {
 
   created() {
     this.getItemIdFunc();
+    this.test();
   },
 
   methods: {
+    toDisplayedPrice(priceInWei) {
+      const readable = toReadablePrice(priceInWei);
+      return `${readable.price} ${readable.unit}`;
+    },
+    async test() {
+      const getERC721FullContract1 = await getERC721FullContract();
+      console.log('getERC721FullContract1', getERC721FullContract1);
+      console.log(this.toDisplayedPrice(getERC721FullContract1));
+    },
     async getItemIdFunc() {
       // this.loading = false;
       console.log('go');
@@ -45,7 +55,7 @@ export default {
       const itemIds = await getItemIds(0, total);
       this.itemIds = itemIds;
       this.total = total;
-      console.log('itemIds', this.itemIds);
+      console.log('itemIds', itemIds);
     // this.loading = false;
     },
     toDisplayedPrice(priceInWei) {

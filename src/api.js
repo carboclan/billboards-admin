@@ -225,6 +225,7 @@ export const getBillboard = async (id) => {
     name: card.name,
     nickname: card.nickname,
   };
+  console.log('idid', id);
   item.owner =
     await Promise.promisify(ERC721FullContract.ownerOf(id));
   item.price =
@@ -238,6 +239,7 @@ export const getBillboard = async (id) => {
 };
 
 export const getItem = async (id) => {
+  console.log('id', id);
   const exist = await Promise.promisify(cryptoWaterMarginContract.tokenExists)(id);
   if (!exist) return null;
   const card = config.cards[id] || {};
@@ -291,10 +293,34 @@ export const isConvert = cardId => new Promise((resolve, reject) => {
     (err, result) => (err ? reject(err) : resolve(result)));
 });
 
+export const getERC721FullContract = async () => {
+  // console.log(cryptoWaterMarginContract);
+  // console.log(convertContract);
+  console.log(ERC721FullContract);
+  console.log(BillboardContract);
+
+  console.log('------');
+  // const item = {
+  //   owner: null,
+  //   price: null,
+  //   nextPrice: null,
+  // };
+  // [item.owner, item.price, item.nextPrice] =
+  //   await Promise.promisify(ERC721FullContract.tokenOfOwnerByIndex)(1);
+
+  // const test = ERC721FullContract.tokenOfOwnerByIndex.call(1);
+  // console.log(test);
+  // return Promise.promisify(ERC721FullContract.ownerOf)(1);
+  return Promise.promisify(BillboardContract.price)(1);
+  // return Promise.promisify(cryptoWaterMarginContract.allOf)(1);
+
+  // return Promise.promisify(ERC721FullContract.totalSupply)();
+  // const price = await Promise.promisify(BillboardContract.price(1));
+};
+
 export const getTotal = () => Promise.promisify(ERC721FullContract.totalSupply)();
 
 export const getItemIds = async (offset, limit) => {
-  console.log('getItemIds');
   let ids = await Promise.promisify(cryptoWaterMarginContract.itemsForSaleLimit)(offset, limit);
   ids = ids.map(id => id.toNumber());
   ids.sort((a, b) => a - b);

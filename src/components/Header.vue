@@ -48,14 +48,14 @@
             <div class="control">
               <div class="select">
                 <!-- mode 报错 -->
-                <!-- <select v-model="locale">
+                <select v-model="locale">
                   <option
                     v-for="(item) in $config.i18n"
                     :key="item.locale"
                     :value="item.locale">
                     {{ item.langDisplay }}
                   </option>
-                </select> -->
+                </select>
               </div>
             </div>
 
