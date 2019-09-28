@@ -2,11 +2,10 @@
   <div id="app">
     <Header />
 
-    <b-button round @click="onMint()">Mint</b-button>
-
-
+    <button
+      @click="onMint()">Mint</button>
     <div class="container main-container">
-      <router-view :key="key"></router-view>
+      <router-view :key="key"/>
     </div>
 
     <Footer />
@@ -31,7 +30,6 @@ export default {
         : this.$route + +new Date();
     },
     onMint() {
-
       mint(1)
         .then(() => {
           alert(this.$t('BUY_SUCCESS_MSG'));
@@ -41,19 +39,19 @@ export default {
           console.log(e);
         });
 
-      alert("onMint");
+      alert('onMint');
       if (this.$store.state.signInError) {
         return this.$router.push({ name: 'Login' });
       }
-      /*mint()
+      /* mint()
         .then(() => {
           alert(this.$t('BUY_SUCCESS_MSG'));
         })
         .catch((e) => {
           alert(this.$t('BUY_FAIL_MSG'));
           console.log(e);
-        });*/
-      
+        }); */
+
       /*
       buyItem(this.itemId, buyPrice)
         .then(() => {
