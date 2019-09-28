@@ -3,14 +3,14 @@
     <div
       v-for="item in items"
       v-if="item"
-
       :key="item.id.toString()"
       class="column
            is-full-mobile
            is-one-quarter-tablet
            is-one-quarter-desktop
            is-one-quarter-widescreen
-           is-one-quarter-fullhd">
+           is-one-quarter-fullhd"
+      @click="$router.push({name: 'Item', params:{id: item.id}})">
       <template v-if="1 <= item.id && item.id <= 114">
         <div class="card">
           <div class="card-image">
@@ -34,7 +34,7 @@
               <p class="item-slogan">{{ $t('Slogan') }}: {{ toDisplayedAd(item.id) }}</p>
               <el-button
                 style="position: relative;z-index: 99;"
-                @click="showDialog(item.id)"
+                @click.stop="showDialog(item.id)"
               >购买</el-button>
             </div>
           </div>
@@ -64,7 +64,8 @@
         :model="form"
         label-width="70px">
         <el-form-item label="拥有者">
-          <el-input v-model="form.owner"/>
+          <!-- <el-input v-model="form.owner"/> -->
+          <p>{{ form.owner }}</p>
         </el-form-item>
         <el-form-item label="当前价格">
           <el-input v-model="form.nowPrice"/>
@@ -196,7 +197,7 @@ export default {
       const price = await getAbPrice(id);
 
       this.form.owner = owner;
-      this.form.nowPrice = price;
+      this.form.nowPrice = Number(price);
     },
     async mintFunc() {
       if (!this.form.adslogan && !this.form.adimg) return this.$message.warning('请完善内容');
